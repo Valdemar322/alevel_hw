@@ -3,11 +3,11 @@ class ChessFigure:
     place = None
 
     def change_color(self):
-        if type(self.color) == str:
-            self.color = self.color.lower()
+        # if isinstance(self.color, str):
+        #     self.color = self.color.lower()
         if self.color == "black":
             self.color = "white"
-        elif self.color == "white":
+        else:
             self.color = "black"
 
     def change_place(self, some_tuple: tuple):
@@ -65,10 +65,7 @@ class Bishop(ChessFigure):
         if 0 <= new_position[0] <= 7 and 0 <= new_position[1] <= 7:
             temp1 = new_position[0] - self.place[0]
             temp2 = new_position[1] - self.place[1]
-            if abs(temp1) == abs(temp2):
-                return True
-            else:
-                return False
+            return abs(temp1) ==  abs(temp2)
         else:
             raise ValueError("Invalid position. Values must be in the range [0, 7].")
 
