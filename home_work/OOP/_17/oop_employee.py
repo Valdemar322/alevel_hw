@@ -2,6 +2,7 @@ from datetime import date
 import calendar
 import csv
 import datetime
+import os
 
 
 class EmailAlreadyExistsException(Exception):
@@ -10,16 +11,19 @@ class EmailAlreadyExistsException(Exception):
         self.exception_handling()
 
     def exception_handling(self):
+        now = datetime.datetime.now()
+        date_format = "%Y-%m-%d %H:%M:%S"
         with open("logs.txt", "a") as file:
-            file.write(f"Date: {str(datetime.datetime.now())[:-7]} | {self.message} \n")
+            file.write(f"Date: {now.strftime(date_format)} | {self.message} \n")
 
 
 class Employee:
     def __init__(self, name: str, pay: int, email: str):
-        self.name = name
-        self.pay = pay
+        self.validate_email(email)
         self.email = email
         self.save_email()
+        self.name = name
+        self.pay = pay
 
     def work(self) -> str:
         return f"I come to the office."
@@ -45,11 +49,15 @@ class Employee:
             writer.writerow([self.email])
 
     def validate_email(self, email: str):
-        with open("emails.csv", "r") as csv_file:
-            csv_reader = csv.reader(csv_file)
-            for line in csv_reader:
-                if email in line:
-                    raise EmailAlreadyExistsException("EmailAlreadyExistsException!")
+        if os.path.exists("emails.csv"):
+            with open("emails.csv", "r") as csv_file:
+                csv_reader = csv.reader(csv_file)
+                for line in csv_reader:
+                    if email in line:
+                        raise EmailAlreadyExistsException("EmailAlreadyExistsException!")
+        else:
+            with open("emails.csv", "a"):
+                pass
 
     def __lt__(self, other):
         return self.pay < other.pay
@@ -119,27 +127,27 @@ class Developer(Employee):
         return len(self.tech_stack) != len(other.tech_stack)
 
 
-# recruiter1 = Recruiter("Alena", 100, "Ahrysha@gugla.com")
-# developer1 = Developer("Voldemar", 500, "test@gugla.com", ["Python", "JS", "HTML", "CSS", "SQL"])
-# developer2 = Developer("Stepa", 300, "pretykity@gugel.com", ["HTML", "CSS"])
+recruiter1 = Recruiter("Alena", 100, "Ahrysha@gugla.com")
+developer1 = Developer("Voldemar", 500, "test@gugla.com", ["Python", "JS", "HTML", "CSS", "SQL"])
+developer2 = Developer("Stepa", 300, "pretykity@gugel.com", ["HTML", "CSS"])
 
-# recruiter1.validate_email("Ahrysha@guglaaa.com")
-# developer1.validate_email("test@guglaasas.com")
-# developer2.validate_email("pretykity@gugel.com")
+recruiter1.validate_email("Ahrysha@guglaaa.com")
+developer1.validate_email("test@guglaasas.com")
+developer2.validate_email("pretykity@gugel.com")
 
-# print(recruiter1.work())
-# print(recruiter1)
-# print(developer1.work())
-# print(developer1)
-# print(developer1 > developer2)
-# print(developer1 >= developer2)
-# print(developer1 < developer2)
-# print(developer1 <= developer2)
-# print(developer1 == developer2)
-# print(developer1 != developer2)
-# print(developer1 + developer2)
-# sum_dev = developer1 + developer2
-# print(sum_dev.name)
-# print(sum_dev.tech_stack)
-# print(sum_dev.pay)
-# print(developer1.check_salary(8))
+print(recruiter1.work())
+print(recruiter1)
+print(developer1.work())
+print(developer1)
+print(developer1 > developer2)
+print(developer1 >= developer2)
+print(developer1 < developer2)
+print(developer1 <= developer2)
+print(developer1 == developer2)
+print(developer1 != developer2)
+print(developer1 + developer2)
+sum_dev = developer1 + developer2
+print(sum_dev.name)
+print(sum_dev.tech_stack)
+print(sum_dev.pay)
+print(developer1.check_salary(8))
