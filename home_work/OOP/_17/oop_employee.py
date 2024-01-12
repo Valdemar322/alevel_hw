@@ -96,7 +96,7 @@ class Developer(Employee):
 
     def __add__(self, other: "Developer") -> object:
         if isinstance(other, Developer):
-            dev = Developer(self.name, self.pay, self.email, self.tech_stack)
+            dev = Developer(self.name, self.pay, f"{self.email + other.email}", self.tech_stack)
             dev.name = self.name + " " + other.name
             if len(self.tech_stack) >= len(other.tech_stack):
                 dev.tech_stack = set(self.tech_stack) - set(other.tech_stack)
@@ -127,27 +127,23 @@ class Developer(Employee):
         return len(self.tech_stack) != len(other.tech_stack)
 
 
-recruiter1 = Recruiter("Alena", 100, "Ahrysha@gugla.com")
-developer1 = Developer("Voldemar", 500, "test@gugla.com", ["Python", "JS", "HTML", "CSS", "SQL"])
-developer2 = Developer("Stepa", 300, "pretykity@gugel.com", ["HTML", "CSS"])
+if __name__ == "__main__":
+    recruiter1 = Recruiter("Alena", 100, "Ahrysha@gugla.com")
+    developer1 = Developer("Voldemar", 500, "test@gugla.com", ["Python", "JS", "HTML", "CSS", "SQL"])
+    developer2 = Developer("Stepa", 300, "pretykity@gugel.com", ["HTML", "CSS"])
 
-recruiter1.validate_email("Ahrysha@guglaaa.com")
-developer1.validate_email("test@guglaasas.com")
-developer2.validate_email("pretykity@gugel.com")
-
-print(recruiter1.work())
-print(recruiter1)
-print(developer1.work())
-print(developer1)
-print(developer1 > developer2)
-print(developer1 >= developer2)
-print(developer1 < developer2)
-print(developer1 <= developer2)
-print(developer1 == developer2)
-print(developer1 != developer2)
-print(developer1 + developer2)
-sum_dev = developer1 + developer2
-print(sum_dev.name)
-print(sum_dev.tech_stack)
-print(sum_dev.pay)
-print(developer1.check_salary(8))
+    print(recruiter1.work())
+    print(recruiter1)
+    print(developer1.work())
+    print(developer1)
+    print(developer1 > developer2)
+    print(developer1 >= developer2)
+    print(developer1 < developer2)
+    print(developer1 <= developer2)
+    print(developer1 == developer2)
+    print(developer1 != developer2)
+    sum_dev = developer1 + developer2
+    print(sum_dev.name)
+    print(sum_dev.tech_stack)
+    print(sum_dev.pay)
+    print(developer1.check_salary(8))

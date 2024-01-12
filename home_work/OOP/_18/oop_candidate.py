@@ -40,6 +40,7 @@ class Candidate:
         return candidates
 
 
-candidates = Candidate.generate_candidates("candidates.csv")
-for obj in candidates:
-    print(obj.first_name, obj.last_name, obj.email, obj.tech_stack, obj.main_skill, obj.main_skill_grade)
+if __name__ == "__main__":
+    candidates = Candidate.generate_candidates("candidates.csv")
+    for obj in candidates:
+        print(obj.first_name, obj.last_name, obj.email, obj.tech_stack, obj.main_skill, obj.main_skill_grade)
