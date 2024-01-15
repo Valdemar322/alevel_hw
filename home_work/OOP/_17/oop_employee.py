@@ -3,6 +3,7 @@ import calendar
 import csv
 import datetime
 import os
+from _20.oop_hw_20 import logger
 
 
 class EmailAlreadyExistsException(Exception):
@@ -48,6 +49,7 @@ class Employee:
             writer = csv.writer(csv_file)
             writer.writerow([self.email])
 
+    @logger
     def validate_email(self, email: str):
         if os.path.exists("emails.csv"):
             with open("emails.csv", "r") as csv_file:

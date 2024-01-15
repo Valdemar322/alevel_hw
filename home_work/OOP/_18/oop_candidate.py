@@ -1,4 +1,5 @@
 import csv
+from _20.oop_hw_20 import logger
 
 
 class Candidate:
@@ -21,6 +22,7 @@ class Candidate:
         return f"{self.first_name} {self.last_name}"
 
     @classmethod
+    @logger
     def generate_candidates(cls, file_path: str) -> list:
         candidates = []
         with open(file_path, "r") as csv_file:
